@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "Painel admnistrativo";
+}
+<div>
+    <div class="d-flex justify-content-end">
+        <a asp-controller="Admin" asp-action="SairAdmin">
+            <button class="btn btn-roxo m-2"><i class="fa-solid fa-right-from-bracket"></i>&ensp; Sair/Deslogar</button>
+        </a>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <i style="font-size: 50px" class="fa-solid fa-calendar-days"></i>
+                    <h5 class="card-title text-center">Eventos</h5>
+                    <a asp-controller="Evento" class="btn btn-roxo text-center" asp-action="Index">
+                        Ver mais &nbsp;<i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <i style="font-size: 50px" class="fa-solid fa-user"></i>
+                    <h5 class="card-title text-center">Clientes</h5>
+                    <a asp-controller="User" class="btn btn-roxo" asp-action="UserListAdmin">
+                        Ver mais &nbsp;<i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <i style="font-size: 50px" class="fa-solid fa-couch"></i>
+                    <h5 class="card-title text-center">Cadeiras</h5>
+                    <a asp-controller="Cadeira" class="btn btn-roxo" asp-action="Index">
+                        Ver mais &nbsp;<i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <i style="font-size: 50px" class="fa-solid fa-ticket"></i>
+                    <h5 class="card-title text-center">Tickets</h5>
+                    <a asp-controller="Ticket" class="btn btn-roxo" asp-action="Index">
+                        Ver mais &nbsp;<i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

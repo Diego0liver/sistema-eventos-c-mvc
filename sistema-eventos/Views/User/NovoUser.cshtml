@@ -1,0 +1,31 @@
+﻿@model UserModel
+@using sistema_eventos.Enum
+@{
+    ViewData["Title"] = "Nova usuario";
+}
+<a asp-controller="User" asp-action="UserListAdmin">
+    <button class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i></button>
+</a>
+<div style="background-color: white" class="container p-3 mt-3 rounded">
+    <h3>Criar novo usuario</h3>
+    <form asp-controller="User" asp-action="NovoUser" method="post">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Nome</label>
+            <input type="text" id="name" name="name" asp-for=name class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">E-mail</label>
+            <input type="email" id="email" name="email" asp-for=email class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Senha</label>
+            <input type="password" id="password" name="password" asp-for=password class="form-control" required>
+        </div>
+        <div cclass="mb-3">
+            <label class="control-label">Tipo de usuario</label>
+            <select class="form-control" asp-for=tipo_user asp-items="Html.GetEnumSelectList<UserTipo>()"></select>
+        </div>
+        <input type="hidden" name="name" asp-for=email value="" />
+        <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+    </form>
+</div>

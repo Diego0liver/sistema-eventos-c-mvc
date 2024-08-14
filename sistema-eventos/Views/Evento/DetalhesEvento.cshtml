@@ -1,0 +1,111 @@
+﻿@model sistema_eventos.ViewModel.EventoCadeiraViewModel
+@{
+    ViewData["Title"] = "Detalhes Evento";
+}
+<div class="d-flex">
+    <a asp-controller="Home" asp-action="Index">
+        <button class="btn btn-primary m-2"><i class="fa-solid fa-arrow-left"></i></button>
+    </a>
+    <div class="p-2 m-2 rounded" style="background-color: seagreen; color: white;">Reservado</div>
+    <div class="p-2 m-2 rounded" style="background-color: #5C4A9D; color: white;">Livre</div>
+</div>
+<div class="text-center">
+    <p class="display-4 titulo">@Model.Evento.nome</p>
+    <div>
+        <p class="titulo"><i class="fa-solid fa-calendar-days"></i>&nbsp; @Model.Evento.data_hora</p>
+        <p class="titulo">R$ @Model.Evento.preco</p>
+    </div>
+    @if (TempData["success"] != null)
+    {
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            @TempData["success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <div class="container sala">
+        @foreach (var group in Model.Cadeiras.GroupBy(c => c.fila))
+        {
+            <ul class="list-inline">
+                @group.Key -
+                @foreach (var cadeira in group)
+                {
+                    var cadeiraReservada = Model.CadeirasReservadasIds.Contains(cadeira.id);
+                    <button class="cadeira @(cadeiraReservada ? "reservada" : "")" type="button" data-bs-toggle="modal" data-bs-target="#selectCadeira-@cadeira.id">
+                    <li class="list-inline-item">@cadeira.cadeira</li>
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="selectCadeira-@cadeira.id" tabindex="-1" aria-labelledby="deleteModalLabe-@cadeira.id" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header text-center">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-ticket"></i> &nbsp; Comfirmar ticket</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <i class="fa-solid fa-tag"></i>&nbsp; @Model.Evento.nome <br />
+                                    <i class="fa-solid fa-calendar-days"></i>&nbsp; @Model.Evento.data_hora <br /><hr />
+                                    <i class="fa-solid fa-chair"></i>&nbsp; Assento @cadeira.cadeira - Fila @group.Key
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                    <form asp-controller="Evento" asp-action="reservarCadeira" method="post">
+                                        <input type="hidden" asp-for=@Model.CadeirasEventos.cadeira_id value="@cadeira.id" />
+                                        <input type="hidden" asp-for=@Model.CadeirasEventos.evento_id value="@Model.Evento.id" />
+                                        <button type="submit" class="btn btn-primary">Comprar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </ul>
+        }
+        <div class="palco">PALCO</div>
+    </div>
+</div>
+
+<style>
+    .cadeira {
+        background-color: #5C4A9D;
+        color: white;
+        padding: 20px;
+        border-radius: 100%;
+    }
+
+    .reservada {
+        background-color: seagreen;
+        color: white;
+        padding: 20px;
+        border-radius: 100%;
+        pointer-events: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .sala {
+        background-color: darkgray;
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .fila {
+        background-color: #180833;
+        color: white;
+        font-weight: bold;
+    }
+
+    .palco {
+        background-color: white;
+        color: #180833;
+        border-radius: 15px;
+    }
+</style>

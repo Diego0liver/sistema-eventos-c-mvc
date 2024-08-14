@@ -1,0 +1,35 @@
+﻿@model UserModel
+@using sistema_eventos.Enum
+@{
+    ViewData["Title"] = "Cadastro";
+}
+<a asp-controller="Home" asp-action="Index">
+    <button class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i></button>
+</a>
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger mt-3">
+        @TempData["error"]
+    </div>
+}
+<div style="background-color: white" class="container p-3 mt-3 rounded">
+    <h3>Criar conta</h3>
+    <form asp-controller="User" asp-action="NovoCliente" method="post">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Nome</label>
+            <input type="text" id="name" name="name" asp-for=name class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">E-mail</label>
+            <input type="email" id="email" name="email" asp-for=email class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Senha</label>
+            <input type="password" id="password" name="password" asp-for=password class="form-control" required>
+        </div>
+        <input type="hidden" name="UserTipo" asp-for=token value="11223344" />
+        <input type="hidden" name="UserTipo" asp-for=tipo_user value="@UserTipo.Cliente" />
+        <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+    </form>
+    <a asp-controller="User" asp-action="LoginCliente">Ja tenho cadastro</a>
+</div>

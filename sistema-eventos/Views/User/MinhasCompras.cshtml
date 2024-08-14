@@ -1,0 +1,41 @@
+﻿@model IEnumerable<sistema_eventos.ViewModel.UserCadeiraEventoViewModel>
+@{
+    ViewData["Title"] = "Minhas compras";
+}
+<h4 style="color: white">Minhas compras</h4>
+<div class="d-flex justify-content-between">
+    <a asp-controller="Home" asp-action="Index">
+        <button class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i></button>
+    </a>
+    <a asp-controller="User" asp-action="SairCliente">
+        <button class="btn btn-primary m-2"><i class="fa-solid fa-right-from-bracket"></i>&ensp; Sair/Deslogar</button>
+    </a>
+</div>
+<table class="table table-dark table-striped mt-3">
+    <thead>
+        <tr>
+            <th scope="col">Evento</th>
+            <th scope="col">Data e hora</th>
+            <th scope="col">Status do evento</th>
+            <th scope="col">Detalhes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var ticket in Model)
+            {
+                <tr>
+                    <th>@ticket.EventoNome</th>
+                    <td>@ticket.EventoData</td>
+                    <td>@ticket.EventoStatus</td>
+                    <td>
+                        <a asp-controller="User" asp-action="DetalhesCompra" asp-route-id="@ticket.TickerId" class="btn btn-success">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

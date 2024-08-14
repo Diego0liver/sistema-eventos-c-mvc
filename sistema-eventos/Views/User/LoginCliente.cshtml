@@ -1,0 +1,36 @@
+﻿@model LoginModel
+@using sistema_eventos.Enum
+@{
+    ViewData["Title"] = "Login";
+}
+<a asp-controller="Home" asp-action="Index">
+    <button class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i></button>
+</a>
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger mt-3">
+        @TempData["error"]
+    </div>
+}
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-primary mt-3">
+        @TempData["success"]
+    </div>
+}
+<div style="background-color: white" class="container p-3 mt-3 rounded">
+    <h3>Login</h3>
+    <form asp-controller="User" asp-action="LogarCliente" method="post">
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">E-mail</label>
+            <input type="email" id="email" name="email" asp-for=email class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Senha</label>
+            <input type="password" id="password" name="password" asp-for=password class="form-control" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary mt-3">Logar</button>
+    </form>
+    <a asp-controller="User" asp-action="CadastroCliente">Quero fazer cadastro</a>
+</div>

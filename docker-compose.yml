@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  sistema-eventos:
+    image: ${DOCKER_REGISTRY-}sistemaeventos
+    build:
+      context: .
+      dockerfile: sistema-eventos/Dockerfile
+    depends_on:
+        - dbpg
+    networks:
+        - eventonet
+
+  dbpg:
+    image: postgres
+    container_name: db_eventos
+    restart: always
+    volumes:
+      - 'pg:/var/lib/postgresql/data'
+    ports:
+        - "5432:5432"
+    networks:
+        - eventonet
+    environment:
+      POSTGRES_PASSWORD: root
+
+networks:
+  eventonet:
+    driver: bridge
+
+volumes:
+  pg:
+    driver: local

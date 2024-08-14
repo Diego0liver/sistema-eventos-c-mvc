@@ -1,0 +1,22 @@
+﻿@model CadeiraModel
+@using sistema_eventos.Enum
+@{
+    ViewData["Title"] = "Nova cadeira";
+}
+<a asp-controller="Cadeira" asp-action="Index">
+    <button class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i></button>
+</a>
+<div style="background-color: white" class="container p-3 mt-3 rounded">
+    <h3>Criar nova cadeira</h3>
+    <form asp-controller="Cadeira" asp-action="NovaCadeira" method="post">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Fila</label>
+            <input type="text" id="fila" name="fila" asp-for=fila class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Numero da cadeira</label>
+            <input type="number" id="cadeira" name="cadeira" asp-for=cadeira class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+    </form>
+</div>

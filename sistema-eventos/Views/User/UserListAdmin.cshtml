@@ -1,0 +1,79 @@
+﻿@model List<UserModel>
+@{
+    ViewData["Title"] = "Usuarios Admin";
+}
+<h4 style="color: white">Usuarios</h4>
+<a asp-controller="Admin" asp-action="Index">
+    <button class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i></button>
+</a>
+<a asp-controller="User" asp-action="NovoUser">
+    <button class="btn btn-success">Novo Usuario &nbsp;<i class="fa-solid fa-plus"></i></button>
+</a>
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success mt-3">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger mt-3">
+        @TempData["error"]
+    </div>
+}
+<table class="table table-dark table-striped mt-3">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Tipo de usuario</th>
+            <th scope="col">Açoes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (UserModel users in Model)
+            {
+                <tr>
+                    <th scope="row">@users.id</th>
+                    <td>@users.name</td>
+                    <td>@users.email</td>
+                    <td>@users.tipo_user</td>
+                    <td>
+                        <div class="d-flex">
+                            <a type="button" class="btn btn-success m-2" asp-controller="User" asp-action="UsuarioId" asp-route-id="@users.id">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                            <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#modalExcluir_@(users.id)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Modal -->
+                <div class="modal fade" id="modalExcluir_@(users.id)" tabindex="-1" aria-labelledby="modalExcluirLabel_@(users.id)" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalExcluirLabel_@(users.id)">Excluir usuario: @users.name</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Deseja excluir o usuario "@users.name"?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                <form method="post" asp-action="Excluir" asp-controller="User" asp-route-id="@users.id">
+                                    <button type="submit" class="btn btn-danger">Deletar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </tbody>
+</table>

@@ -1,0 +1,32 @@
+﻿@model sistema_eventos.ViewModel.UserCadeiraEventoViewModel
+@{
+    ViewData["Title"] = "Detalhes da compra";
+}
+<div class="mt-3 p-3 container">
+    <a asp-controller="User" asp-action="MinhasCompras">
+        <button class="btn btn-primary m-2"><i class="fa-solid fa-arrow-left"></i></button>
+    </a>
+    <h1 style="color: white">@Model.EventoNome</h1>
+    <ul class="list-group">
+        <li class="list-group-item"><b>Codigo da compra:</b> @Model.TicketCodigo</li>
+        <li class="list-group-item"><b>Data do evento:</b> @Model.EventoData</li>
+        <li class="list-group-item"><b>Valor:</b> R$ @Model.EventoPreco</li>
+        <li class="list-group-item"><b>Data da compra:</b> @Model.DataCompra</li>
+        <li class="list-group-item"><b>Fila do assento:</b> @Model.CadeiraFila</li>
+        <li class="list-group-item"><b>Numero do assento:</b> @Model.CadeiraNumero</li>
+        <li class="list-group-item"><b>Status do evento:</b>
+            @if (@Model.EventoStatus == 0)
+            {
+                <p class="btn-success p-2 rounded">
+                    Evento ainda nao acontenceu ou esta acontecendo
+                </p>
+            }
+            else
+            {
+                <p class="btn-danger p-2 rounded">
+                    Evento finalizado
+                </p>
+            }
+        </li>
+    </ul>
+</div>
