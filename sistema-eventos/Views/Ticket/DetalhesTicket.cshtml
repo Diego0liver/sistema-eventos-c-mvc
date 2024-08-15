@@ -12,9 +12,9 @@
         <li class="list-group-item"><b>E-mail do cliente:</b> @Model.EmailCliente</li>
         <li class="list-group-item"><b>Evento:</b> @Model.EventoNome</li>
         <li class="list-group-item"><b>Codigo da compra:</b> @Model.TicketCodigo</li>
-        <li class="list-group-item"><b>Data do evento:</b> @Model.EventoData</li>
+        <li class="list-group-item"><b>Data do evento:</b> @Model.EventoData.ToString("dd/MM/yyyy HH:mm:ss")</li>
         <li class="list-group-item"><b>Valor:</b> R$ @Model.EventoPreco</li>
-        <li class="list-group-item"><b>Data da compra:</b> @Model.TicketDataCompra</li>
+        <li class="list-group-item"><b>Data da compra:</b> @Model.TicketDataCompra.ToString("dd/MM/yyyy HH:mm:ss")</li>
         <li class="list-group-item"><b>Fila do assento:</b> @Model.FilaCadeira</li>
         <li class="list-group-item"><b>Numero do assento:</b> @Model.Cadeira</li>
         <li class="list-group-item"><b>Status do evento:</b>

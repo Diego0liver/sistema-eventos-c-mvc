@@ -2,10 +2,28 @@
 @{
     ViewData["Title"] = "Eventos e ticket";
 }
-
+@{
+    var busca = ViewBag.Busca as string;
+}
 <div class="text-center">
     <h6 class="display-4 titulo">Eventos</h6>
     <p class="titulo">Melhores eventos esta no Eventos e ticket</p>
+    <form asp-controller="Home" asp-action="Index">
+        <div class="row">
+            <div class="col-md-9">
+                <input type="text" name="busca" class="form-control" placeholder="Buscar evento" />
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-roxo">Buscar</button>
+            </div>
+            @if (!string.IsNullOrEmpty(busca))
+            {
+                <div class="col-md-1">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Limpar</a>
+                </div>
+            }
+        </div>
+    </form>
     @if (Model != null && Model.Any())
     {
         <div class="row">
@@ -14,7 +32,7 @@
                 <div class="card bg-light m-3" style="max-width: 18rem; padding: 0px !important">
                     <div class="card-header"><i class="fa-solid fa-tag"></i>&nbsp;@eventos.nome</div>
                     <div class="card-body">
-                        <h5 class="card-title"><i class="fa-solid fa-calendar-days"></i>&nbsp;@eventos.data_hora</h5><hr />
+                        <h5 class="card-title"><i class="fa-solid fa-calendar-days"></i>&nbsp;@eventos.data_hora.ToString("dd/MM/yyyy HH:mm:ss")</h5><hr />
                         <p class="card-text text-secondary">R$ @eventos.preco</p>
                         <a asp-controller="Evento" class="btn btn-roxo" asp-action="DetalhesEvento" asp-route-id="@eventos.id">
                             Ver mais &nbsp;<i class="fa-solid fa-arrow-right"></i>

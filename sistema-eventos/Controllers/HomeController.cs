@@ -13,10 +13,15 @@ namespace sistema_eventos.Controllers
             _eventoRepository = eventoRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string busca)
         {
-            var eventos = _eventoRepository.GetEventos().Where(e => e.status == 0).ToList();
-            return View(eventos);
+            ViewBag.Busca = busca;
+            var eventos = _eventoRepository.GetEventos().Where(e => e.status == 0);
+            if(!string.IsNullOrEmpty(busca))
+            {
+                eventos = eventos.Where(e => e.nome.Contains(busca, StringComparison.OrdinalIgnoreCase));
+            }
+            return View(eventos.ToList());
         }
 
         public IActionResult Privacy()

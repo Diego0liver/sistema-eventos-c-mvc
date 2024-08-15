@@ -9,9 +9,9 @@
     <h1 style="color: white">@Model.EventoNome</h1>
     <ul class="list-group">
         <li class="list-group-item"><b>Codigo da compra:</b> @Model.TicketCodigo</li>
-        <li class="list-group-item"><b>Data do evento:</b> @Model.EventoData</li>
+        <li class="list-group-item"><b>Data do evento:</b> @Model.EventoData.ToString("dd/MM/yyyy HH:mm:ss")</li>
         <li class="list-group-item"><b>Valor:</b> R$ @Model.EventoPreco</li>
-        <li class="list-group-item"><b>Data da compra:</b> @Model.DataCompra</li>
+        <li class="list-group-item"><b>Data da compra:</b> @Model.DataCompra.ToString("dd/MM/yyyy HH:mm:ss")</li>
         <li class="list-group-item"><b>Fila do assento:</b> @Model.CadeiraFila</li>
         <li class="list-group-item"><b>Numero do assento:</b> @Model.CadeiraNumero</li>
         <li class="list-group-item"><b>Status do evento:</b>
