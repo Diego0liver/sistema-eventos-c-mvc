@@ -1,4 +1,5 @@
-﻿using sistema_eventos.Db;
+﻿using Microsoft.EntityFrameworkCore;
+using sistema_eventos.Db;
 using sistema_eventos.Enum;
 using sistema_eventos.Models;
 
@@ -17,11 +18,10 @@ namespace sistema_eventos.Repository
             return _bancoContext.Eventos.ToList();
         }
 
-        EventosModel IEventoRepository.Adicionar(EventosModel eventos)
+        public async Task AdicionarAsync(EventosModel eventos)
         {
             _bancoContext.Eventos.Add(eventos);
-            _bancoContext.SaveChanges();
-            return (eventos);
+            await _bancoContext.SaveChangesAsync();
         }
 
         EventosModel IEventoRepository.GetById(int id)

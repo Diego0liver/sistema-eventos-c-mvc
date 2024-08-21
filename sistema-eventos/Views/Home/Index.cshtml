@@ -29,11 +29,12 @@
         <div class="row">
             @foreach (EventosModel eventos in Model)
             {
-                <div class="card bg-light m-3" style="max-width: 18rem; padding: 0px !important">
-                    <div class="card-header"><i class="fa-solid fa-tag"></i>&nbsp;@eventos.nome</div>
+                <div class="card m-3" style="width: 18rem; padding: 0px !important">
+                    <img src="/banners/@eventos.banner" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title"><i class="fa-solid fa-calendar-days"></i>&nbsp;@eventos.data_hora.ToString("dd/MM/yyyy HH:mm:ss")</h5><hr />
-                        <p class="card-text text-secondary">R$ @eventos.preco</p>
+                        <h5 class="card-title"><i class="fa-solid fa-tag"></i>&nbsp;@eventos.nome</h5>
+                        <p class="card-text">R$ @eventos.preco</p>
+                        <p class="card-text"><i class="fa-solid fa-calendar-days"></i>&nbsp;@eventos.data_hora.ToString("dd/MM/yyyy HH:mm:ss")</p>
                         <a asp-controller="Evento" class="btn btn-roxo" asp-action="DetalhesEvento" asp-route-id="@eventos.id">
                             Ver mais &nbsp;<i class="fa-solid fa-arrow-right"></i>
                         </a>

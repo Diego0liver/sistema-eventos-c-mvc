@@ -21,7 +21,8 @@ namespace sistema_eventos.Migrations
                     nome = table.Column<string>(type: "text", nullable: false),
                     preco = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     data_hora = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    status = table.Column<int>(type: "integer", nullable: false)
+                    status = table.Column<int>(type: "integer", nullable: false),
+                    banner = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -17,6 +17,7 @@ namespace sistema_eventos.Models
         [Required]
         public DateTime data_hora { get; set; }
         public Status status { get; set; }
+        public string? banner { get; set; }
 
         public ICollection<CadeiraEventoModel> CadeiraEvento { get; set; }
     }

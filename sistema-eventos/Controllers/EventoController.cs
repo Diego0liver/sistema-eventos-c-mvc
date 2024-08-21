@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 using sistema_eventos.Enum;
 using sistema_eventos.Helper;
 using sistema_eventos.Models;
@@ -15,7 +16,8 @@ namespace sistema_eventos.Controllers
         private readonly ITicketRepository _ticketRepository;
         private readonly ISessionCliente _sessionCliente;
         private readonly ISessionAdmin _sessionAdmin;
-        public EventoController(IEventoRepository eventoRepository, ICadeiraRepository cadeiraRepository, ICadeiraEventoRepository cadeiraEventoRepository, ITicketRepository ticketRepository, ISessionCliente sessionCliente, ISessionAdmin sessionAdmin)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public EventoController(IEventoRepository eventoRepository, ICadeiraRepository cadeiraRepository, ICadeiraEventoRepository cadeiraEventoRepository, ITicketRepository ticketRepository, ISessionCliente sessionCliente, ISessionAdmin sessionAdmin, IWebHostEnvironment webHostEnvironment)
         {
             _eventoRepository = eventoRepository;
             _cadeiraRepository = cadeiraRepository;
@@ -23,6 +25,7 @@ namespace sistema_eventos.Controllers
             _ticketRepository = ticketRepository;
             _sessionCliente = sessionCliente;
             _sessionAdmin = sessionAdmin;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -38,16 +41,42 @@ namespace sistema_eventos.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult NovoEvento(EventosModel eventos)
+        public async Task<IActionResult> NovoEvento(EventosModel eventos, IFormFile banner)
         {
             try
             {
+                // Salvar imagem do banner caso ela venha
+                if(banner != null)
+                {
+                    var tipoDeArquivos = new[] { "image/jpeg", "image/png" };
+                    if (!tipoDeArquivos.Contains(banner.ContentType))
+                    {
+                        TempData["errorImg"] = "Apenas arquivos de imagem JPEG e PNG são permitidos.";
+                        return RedirectToAction("NovoEvento");
+                    }
+
+                    var caminhoImg = Path.Combine(_webHostEnvironment.WebRootPath, "banners");
+                    if(!Directory.Exists(caminhoImg))
+                    {
+                        Directory.CreateDirectory(caminhoImg);
+                    }
+
+                    var nomeArquivo = Guid.NewGuid().ToString() + "_" + banner.FileName;
+                    var caminhoArquivo = Path.Combine(caminhoImg, nomeArquivo);
+
+                    using (var stream = new FileStream(caminhoArquivo, FileMode.Create))
+                    {
+                        await banner.CopyToAsync(stream);
+                    }
+
+                    eventos.banner = nomeArquivo;
+                }
                 // Convertendo a datatime
                 if (eventos.data_hora.Kind == DateTimeKind.Unspecified)
                 {
                     eventos.data_hora = DateTime.SpecifyKind(eventos.data_hora, DateTimeKind.Utc);
                 }
-                _eventoRepository.Adicionar(eventos);
+                _eventoRepository.AdicionarAsync(eventos);
                 TempData["success"] = "Evento adicionado com sucesso.";
                 return RedirectToAction("Index");
             }

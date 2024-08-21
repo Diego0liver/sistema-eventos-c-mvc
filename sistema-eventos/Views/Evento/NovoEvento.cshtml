@@ -6,20 +6,31 @@
 <a asp-controller="Evento" asp-action="Index">
     <button class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i></button>
 </a>
+@if (TempData["errorImg"] != null)
+{
+    <div class="alert alert-danger mt-3">
+        @TempData["errorImg"]
+    </div>
+}
 <div style="background-color: white" class="container p-3 mt-3 rounded">
     <h3>Criar novo evento</h3>
-    <form asp-controller="Evento" asp-action="NovoEvento" method="post">
+    <form asp-controller="Evento" asp-action="NovoEvento" method="post" enctype="multipart/form-data">
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Titulo</label>
-            <input type="text" asp-for=nome class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+            <label class="form-label">Titulo</label>
+            <input type="text" asp-for=nome class="form-control" required>
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Preço</label>
-            <input type="text" asp-for=preco class="form-control" id="exampleInputPassword1" required>
+            <label class="form-label">Preço</label>
+            <input type="text" asp-for=preco class="form-control" required>
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Data e hora</label>
-            <input type="datetime-local" asp-for=data_hora class="form-control" id="exampleInputPassword1" required>
+            <label for="formFile" class="form-label">Banner do evento</label>
+            <input class="form-control" type="file" name="banner">
+            <div class="form-text">Somente imagens</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Data e hora</label>
+            <input type="datetime-local" asp-for=data_hora class="form-control" required>
         </div>
         <div cclass="mb-3">
             <label class="control-label">Status</label>
