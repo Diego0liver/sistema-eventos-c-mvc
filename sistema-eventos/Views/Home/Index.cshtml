@@ -30,7 +30,12 @@
             @foreach (EventosModel eventos in Model)
             {
                 <div class="card m-3" style="width: 18rem; padding: 0px !important">
-                    <img src="/banners/@eventos.banner" class="card-img-top" alt="...">
+                    @if(eventos.banner != null)
+                    {
+                        <img src="/banners/@eventos.banner" class="card-img-top" alt="...">
+                    }else{
+                        <img src="/banners/evento.png" class="card-img-top" alt="...">
+                    }
                     <div class="card-body">
                         <h5 class="card-title"><i class="fa-solid fa-tag"></i>&nbsp;@eventos.nome</h5>
                         <p class="card-text">R$ @eventos.preco</p>
